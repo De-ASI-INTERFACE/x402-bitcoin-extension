@@ -1,7 +1,18 @@
 # Prior Art and Attribution — x402-Bitcoin
 
-**Author:** Richard Patterson (@De-ASI-INTERFACE) | **Date:** 2026-07-09
+**Author:** Richard Patterson (@De-ASI-INTERFACE)
+**Date:** 2026-07-09
 
----
+## Primary Attribution
 
-Originally authored by Richard Patterson as part of the x402 multi-chain payment routing family. Extends the canonical x402-Solana specification to Bitcoin's UTXO and Lightning channel model. Prior art consulted: BOLT-11 (Lightning invoice), BIP-174 (PSBT), BIP-340 (Schnorr). None define an HTTP-layer payment gating protocol. This binding is the original work of Richard Patterson.
+Richard Patterson originated the x402-Bitcoin Extension.
+**Reference ID:** RP-DEASI-BTC-2026-0709-001
+
+## Prior Art Chain
+
+| Date | Event |
+|---|---|
+| 2026-06-19 | x402-Solana Extension originated |
+| 2026-07-07 | x402-Solana v1.0.0 released |
+| 2026-07-09 | x402-Ethereum Extension originated |
+| 2026-07-09 | x402-Bitcoin Extension originated |

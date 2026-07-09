@@ -1,26 +1,40 @@
 cff-version: 1.2.0
-title: "x402-Bitcoin: HTTP 402 Payment-Gated Routing on Bitcoin"
-message: "If you use this specification, please cite it using the metadata below."
+message: >-
+  If you use the x402-Bitcoin Extension specification, formal models,
+  or architecture in your research, implementation, or audit work,
+  please cite as below.
+title: 'x402-Bitcoin: HTTP 402 Payment-Gated Routing on Bitcoin'
+version: 1.0.0
+date-released: '2026-07-09'
 type: software
 authors:
   - family-names: Patterson
     given-names: Richard
     alias: De-ASI-INTERFACE
-version: 1.0.0
-date-released: "2026-07-09"
-url: "https://github.com/De-ASI-INTERFACE/x402-bitcoin-extension"
+    affiliation: >-
+      De-ASI-INTERFACE / QuantumTradingInfinity / richy.ai
+    country: US
+    city: Akron
+    region: Ohio
+repository-code: 'https://github.com/De-ASI-INTERFACE/x402-bitcoin-extension'
 license: MIT
-abstract: >
-  Canonical specification for HTTP 402 Payment-Gated Routing on Bitcoin.
-  Defines BOLT-11 Lightning invoice preimage proofs and PSBT OP_RETURN
-  on-chain fallback as the x402 payment verification surface.
-  Authored by Richard Patterson.
+abstract: >-
+  The x402-Bitcoin Extension adapts the x402 HTTP 402 payment standard to
+  Bitcoin mainnet via the Lightning Network (BOLT-11/BOLT-12) and BIP-322
+  generic message signing. It defines a structured payment request schema
+  (scheme: bitcoin-lightning), an HTLC Facilitator verification model with
+  payment preimage integrity, replay prevention via payment hash uniqueness,
+  and CLTV expiry enforcement invariants, with Lean 4 formal proofs.
 keywords:
+  - bitcoin
+  - lightning-network
   - x402
-  - HTTP 402
-  - Bitcoin
-  - Lightning Network
-  - BOLT-11
-  - HTLC
-  - payment routing
-  - Richard Patterson
+  - http-402
+  - htlc
+  - bolt11
+  - bolt12
+  - bip322
+  - formal-verification
+  - lean4
+  - machine-payments
+  - richard-patterson
