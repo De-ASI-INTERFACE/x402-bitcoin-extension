@@ -1,27 +1,41 @@
--- x402-Bitcoin Basic | Author: Richard Patterson (@De-ASI-INTERFACE)
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Nat.Basic
+-- ============================================================
+-- x402-Bitcoin: Basic Re-export Shim
+-- Author: Richard Patterson (@De-ASI-INTERFACE)
+-- Date: 2026-07-09
+-- Chain: Bitcoin / Lightning Network HTLC / BIP-68
+--
+-- Re-exports X402Bitcoin.PaymentVerification as the single
+-- authoritative source of all shared types and definitions.
+-- Chain-prefixed theorem aliases are provided for ergonomic use.
+--
+-- Note: Bitcoin/Lightning uses payment_hash (SHA-256 of preimage)
+-- as the replay nonce, settled_hashes : Finset Nat for the set
+-- of consumed HTLCs, expiry_cltv for CLTV block expiry, and
+-- amount_msat (millisatoshis) as the amount field.
+-- ============================================================
+import X402Bitcoin.PaymentVerification
 
 namespace X402Bitcoin
 
-structure HTLCPayment where
-  payment_hash : Nat  -- SHA-256 hash of preimage
-  amount_msat  : Nat  -- millisatoshis
-  expiry_cltv  : Nat  -- CLTV block expiry
-  deriving Repr, DecidableEq
+/-- Alias: HTLC hash uniqueness under the Bitcoin chain prefix.
+    result type: a.payment_hash ∉ s.settled_hashes. -/
+theorem bitcoin_replay_prevented
+    (a : PaymentAuth) (s : FacilitatorState) (h : verify a s) :
+    a.payment_hash ∉ s.settled_hashes :=
+  replay_prevented a s h
 
-structure LightningState where
-  settled_hashes : Finset Nat
-  block_height   : Nat
-  deriving Repr
+/-- Alias: CLTV block expiry enforcement under the Bitcoin chain prefix.
+    Delegates to within_expiry: s.block_height ≤ a.expiry_cltv. -/
+theorem bitcoin_not_expired
+    (a : PaymentAuth) (s : FacilitatorState) (h : verify a s) :
+    s.block_height ≤ a.expiry_cltv :=
+  within_expiry a s h
 
-def verify (p : HTLCPayment) (s : LightningState) : Prop :=
-  p.payment_hash ∉ s.settled_hashes ∧ s.block_height ≤ p.expiry_cltv
-
-theorem bitcoin_htlc_unique (p : HTLCPayment) (s : LightningState) (h : verify p s)
-    : p.payment_hash ∉ s.settled_hashes := h.1
-
-theorem bitcoin_not_expired (p : HTLCPayment) (s : LightningState) (h : verify p s)
-    : s.block_height ≤ p.expiry_cltv := h.2
+/-- Alias: positive millisatoshi amount under the Bitcoin chain prefix.
+    Delegates to positive_amount: 0 < a.amount_msat. -/
+theorem bitcoin_positive_amount
+    (a : PaymentAuth) (s : FacilitatorState) (h : verify a s) :
+    0 < a.amount_msat :=
+  positive_amount a s h
 
 end X402Bitcoin
