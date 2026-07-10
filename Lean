@@ -1,0 +1,12 @@
+# .github/workflows/lean-build.yml
+      - name: Build with lean-action
+        uses: leanprover/lean-action@v1
+        with:
+          build: true
+          use-mathlib-cache: true
+          lake-package-directory: .
+          
+      # Add this step to clear corrupted cache if build fails
+      - name: Clear lake cache on failure
+        if: failure()
+        run: rm -rf .lake/packages/mathlib
